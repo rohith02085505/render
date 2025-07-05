@@ -21,8 +21,8 @@ os.makedirs("uploads", exist_ok=True)
 
 
 # Mount static folders
-app.mount("/static", StaticFiles(directory="html/static"), name="static")
-app.mount("/img", StaticFiles(directory="html/img"), name="img")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/img", StaticFiles(directory="img"), name="img")
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 
