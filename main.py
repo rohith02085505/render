@@ -17,7 +17,15 @@ from auth import get_current_user
 
 app = FastAPI()
 os.makedirs("uploads", exist_ok=True)
+
+
+
+# Mount static folders
+app.mount("/static", StaticFiles(directory="html/static"), name="static")
+app.mount("/img", StaticFiles(directory="html/img"), name="img")
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+
+
 UPLOAD_DIR = "uploads"
 app.add_middleware(
     CORSMiddleware,
