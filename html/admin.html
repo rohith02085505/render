@@ -2,32 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Panel - LostLink AI</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-   <style>
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('img/browse.avif') no-repeat center center fixed;
+      background: url('/img/browse.avif') no-repeat center center fixed;
       background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-  </style>
-  <style>
-   
-
+    header {
+      background-color: #0047ab;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
     header h1 {
       margin: 0;
-      padding: 0;
-      font-size: 1.8em;
+      font-size: 1.8rem;
+      flex: 1 1 100%;
     }
-
+    header h2 {
+      margin: 0;
+      font-weight: normal;
+      font-size: 1.2rem;
+      flex: 1 1 auto;
+    }
     nav {
-      margin-top: 1em;
+      flex: 1 1 100%;
+      margin-top: 0.5rem;
     }
-
     nav ul {
       list-style: none;
       padding: 0;
@@ -37,9 +51,109 @@
       gap: 1rem;
       justify-content: flex-start;
     }
-
     nav li {
       margin: 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+    nav a:hover {
+      background-color: #003580;
+    }
+
+    main {
+      flex: 1 1 auto;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto 2rem auto;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    section h2 {
+      margin-bottom: 1rem;
+      color: #0047ab;
+      border-bottom: 2px solid #0047ab;
+      padding-bottom: 0.3rem;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1rem;
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 0.8rem;
+    }
+    .card h3 {
+      margin: 0.5rem 0;
+      color: #0047ab;
+      font-size: 1.2rem;
+    }
+    .badge {
+      background-color: #ffcc00;
+      color: #333;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      margin-left: 5px;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 0.3rem 0;
+    }
+    .card button {
+      margin-top: auto;
+      background-color: #d9534f;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+      width: 100%;
+    }
+    .card button:hover:not(:disabled) {
+      background-color: #c9302c;
+    }
+    .card button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #0047ab;
+      color: white;
+      font-size: 0.9rem;
+      margin-top: auto;
     }
 
     @media (max-width: 768px) {
@@ -47,42 +161,45 @@
         flex-direction: column;
         gap: 0.5rem;
       }
+      .card {
+        width: 100%;
+      }
     }
   </style>
-
+</head>
+<body>
   <header>
     <h1>🛠️ Admin Dashboard</h1>
-    
-    <h1>Welcome Rohith 👋</h1>
-    
-    
-  <nav>
-    <ul>
-      <li><a href="home.html">Home</a></li>
-      <li><a href="browser.html">Browse</a></li>
-      <li><a href="report_found.html">Report Found</a></li>
-      <li><a href="report_lost.html">Report Lost</a></li>
-      <li><a href="claim.html">Claim</a></li>
-      <li><a href="browser.html">Browse Items</a></li>
-      <li><a href="qr_page.html">QR</a></li>
-      <li><a href="feedback.html">Feedback</a></li>
-      <li><a href="dashboard.html">Feedback Dashboard</a></li>
-      <li><a href="admin.html">Admin</a></li>
-      <li><a href="index.html">LostLink AI</a></li>
-
-      
-  </nav>
+    <h2>Welcome, Rohith 👋</h2>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="browser.html">Browse</a></li>
+        <li><a href="report_found.html">Report Found</a></li>
+        <li><a href="report_lost.html">Report Lost</a></li>
+        <li><a href="claim.html">Claim</a></li>
+        <li><a href="qr_page.html">QR</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="dashboard.html">Feedback Dashboard</a></li>
+        <li><a href="admin.html">Admin</a></li>
+        <li><a href="index.html">LostLink AI</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main>
     <section>
       <h2>Pending Claims & Unreviewed Items</h2>
-      <div id="adminGrid" class="grid"></div>
+      <div id="adminGrid" class="grid">
+        <!-- Admin items go here -->
+      </div>
     </section>
 
     <section>
       <h2>📬 User Feedbacks</h2>
-      <div id="feedbackGrid" class="grid"></div>
+      <div id="feedbackGrid" class="grid">
+        <!-- Feedback cards go here -->
+      </div>
     </section>
   </main>
 
@@ -92,47 +209,72 @@
 
   <script>
     async function loadAdminData() {
-      const res = await fetch("/admin");
-      const items = await res.json();
-      const grid = document.getElementById("adminGrid");
-      grid.innerHTML = "";
+      try {
+        const res = await fetch("/admin");
+        if (!res.ok) throw new Error('Failed to fetch admin items');
+        const items = await res.json();
 
-      items.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
-        const priority = item.priority ? '<span class="badge">🔥 Priority</span>' : '';
-        const wantsCall = item.wants_call ? '<span class="badge">📞 Wants Call</span>' : '';
+        const grid = document.getElementById("adminGrid");
+        grid.innerHTML = "";
 
-        card.innerHTML = `
-          <img src="${item.image_url}" alt="${item.item_name}" />
-          <h3>${item.item_name} ${priority} ${wantsCall}</h3>
-          <p><strong>Type:</strong> ${item.type}</p>
-          <p><strong>Location:</strong> ${item.location}</p>
-          <p><strong>Description:</strong> ${item.description}</p>
-          <p><strong>Date:</strong> ${item.date} at ${item.time}</p>
-          <p><strong>Contact:</strong> ${item.contact_info}</p>
-          <button onclick="approveItem('${item._id}')">✅ Mark as Claimed</button>
-        `;
+        if (items.length === 0) {
+          grid.innerHTML = "<p>No pending claims or items found.</p>";
+          return;
+        }
 
-        grid.appendChild(card);
-      });
+        items.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "card";
+          const priority = item.priority ? '<span class="badge">🔥 Priority</span>' : '';
+          const wantsCall = item.wants_call ? '<span class="badge">📞 Wants Call</span>' : '';
+
+          card.innerHTML = `
+            <img src="${item.image_url}" alt="${item.item_name}" />
+            <h3>${item.item_name} ${priority} ${wantsCall}</h3>
+            <p><strong>Type:</strong> ${item.type}</p>
+            <p><strong>Location:</strong> ${item.location}</p>
+            <p><strong>Description:</strong> ${item.description}</p>
+            <p><strong>Date:</strong> ${item.date} at ${item.time}</p>
+            <p><strong>Contact:</strong> ${item.contact_info}</p>
+            <button onclick="approveItem('${item._id}', this)">✅ Mark as Claimed</button>
+          `;
+
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Error loading admin data:", err);
+        document.getElementById("adminGrid").innerHTML = "<p>⚠️ Failed to load admin items.</p>";
+      }
     }
 
-    async function approveItem(id) {
-      const res = await fetch(`/admin/approve/${id}`, {
-        method: "POST"
-      });
-      if (res.ok) {
-        alert("✅ Marked as claimed.");
-        loadAdminData();
-      } else {
-        alert("❌ Failed to update item.");
+    async function approveItem(id, btn) {
+      btn.disabled = true;
+      btn.textContent = "⏳ Processing...";
+      try {
+        const res = await fetch(`/admin/approve/${id}`, {
+          method: "POST"
+        });
+
+        if (res.ok) {
+          alert("✅ Marked as claimed.");
+          loadAdminData();
+        } else {
+          const data = await res.json();
+          alert("❌ Failed to update item: " + (data.detail || 'Unknown error'));
+          btn.disabled = false;
+          btn.textContent = "✅ Mark as Claimed";
+        }
+      } catch (error) {
+        alert("❌ Network error. Try again.");
+        btn.disabled = false;
+        btn.textContent = "✅ Mark as Claimed";
       }
     }
 
     async function loadFeedbacks() {
       try {
         const res = await fetch("/feedbacks");
+        if (!res.ok) throw new Error('Failed to fetch feedbacks');
         const feedbacks = await res.json();
         const grid = document.getElementById("feedbackGrid");
         grid.innerHTML = "";
@@ -160,33 +302,28 @@
       }
     }
 
-    // Load both admin items and feedbacks on page load
+    // Login/logout toggle
+    (function handleAuthLinks() {
+      const nav = document.querySelector("nav ul");
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        const logoutLink = document.createElement("li");
+        logoutLink.innerHTML = `<a href="#" id="logoutBtn">Logout</a>`;
+        nav.appendChild(logoutLink);
+
+        document.getElementById("logoutBtn").onclick = (e) => {
+          e.preventDefault();
+          localStorage.removeItem("token");
+          alert("🔓 Logged out!");
+          window.location.href = "home.html";
+        };
+      }
+    })();
+
+    // Initial load
     loadAdminData();
     loadFeedbacks();
-  </script>
-
-  <script>
-    // Login/logout toggle
-    const nav = document.querySelector("nav");
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      const logoutLink = document.createElement("a");
-      logoutLink.href = "#";
-      logoutLink.textContent = "Logout";
-      logoutLink.onclick = () => {
-        localStorage.removeItem("token");
-        alert("🔓 Logged out!");
-        window.location.href = "home.html";
-      };
-
-      const loginLink = Array.from(nav.children).find(link => link.textContent === "Login");
-      if (loginLink) {
-        nav.replaceChild(logoutLink, loginLink);
-      } else {
-        nav.appendChild(logoutLink);
-      }
-    }
   </script>
 </body>
 </html>

@@ -95,7 +95,7 @@ def get_stats():
 
 from fastapi import Depends
   # or however you're getting current user
-from ai_matcher import match_with_tfidf
+from ai_matcher import match_with_tfidf,generate_qr_for_item
 @app.post("/report_lost")
 async def report_lost(
     item_name: str = Form(...),
@@ -152,7 +152,7 @@ async def report_lost(
         "message": "Lost item reported successfully.",
         "item_id": item_id,
         "wants_call": wants_call,
-        
+        "generate_qr": generate_qr_for_item
     }
 from fastapi import Query
 from typing import Optional
@@ -238,6 +238,7 @@ import os
 
 
 # Serve index, login, signup directly
+
 
 
 @app.get("/login")
@@ -376,3 +377,10 @@ def serve_qr_page(item_id: str):
 @app.get("/report_lost.html")
 def serve_lost_page():
     return FileResponse("html/report_lost.html")
+
+@app.get("/{page_name}.html")
+def serve_html_page(page_name: str):
+    path = f"html/{page_name}.html"
+    if os.path.exists(path):
+        return FileResponse(path)
+    raise HTTPException(404, "Page not found")

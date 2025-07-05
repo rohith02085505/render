@@ -4,13 +4,14 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Signup - LostLink AI</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="/static/style.css" />
+
 </head>
 <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('img/signup.jpg') no-repeat center center fixed;
+      background: url('/img/signup.jpg') no-repeat center center fixed;
       background-size: cover;
     }
   </style>
@@ -46,34 +47,34 @@
   <footer>
     <p>LostLink AI © 2025</p>
   </footer>
+<script>
+  const form = document.getElementById("signupForm");
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
 
-  <script>
-    const form = document.getElementById("signupForm");
-    form.onsubmit = async (e) => {
-      e.preventDefault();
-      const email = form.email.value;
-      const password = form.password.value;
+    const res = await fetch("/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }) // ✅ include name
+    });
 
-      const res = await fetch("/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
+    const data = await res.json();
 
-      const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem("token", data.access_token); // ✅ moved inside
+      document.getElementById("signupMessage").innerText = "✅ Signup successful!";
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1000);
+    } else {
+      document.getElementById("signupMessage").innerText = "❌ " + (data.detail || "Signup failed");
+    }
+  };
+</script>
 
-      if (res.ok) {
-        document.getElementById("signupMessage").innerText = "✅ Signup successful!";
-        setTimeout(() => {
-          window.location.href = "login.html";
-        }, 1000);
-      } else {
-        document.getElementById("signupMessage").innerText = "❌ " + (data.detail || "Signup failed");
-      }
-    };
-    localStorage.setItem("token", data.access_token);
-
-  </script>
   <script>
   const nav = document.querySelector("nav");
 
