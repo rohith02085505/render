@@ -31,7 +31,7 @@ app.include_router(auth_router)
 
 @app.get("/")
 def home():
-    return FileResponse("frontend/index.html")
+    return FileResponse("html/index.html")
 
 @app.post("/report_found")
 async def report_found(
@@ -233,16 +233,16 @@ import os
 
 @app.get("/qr/{item_id}")
 def serve_qr_page(item_id: str):
-    return FileResponse("frontend/qr_page.html")  # create a dummy static HTML
+    return FileResponse("html/qr_page.html")  # create a dummy static HTML
 
 
 @app.get("/login")
 def serve_login():
-    return FileResponse("frontend/login.html")
+    return FileResponse("html/login.html")
 
 @app.get("/signup")
 def serve_signup():
-    return FileResponse("frontend/signup.html")
+    return FileResponse("html/signup.html")
 
 from fastapi import Body
 from bson import ObjectId
@@ -296,7 +296,7 @@ def get_user_info(user: dict = Depends(get_current_user)):
 
 @app.get("/dashboard")
 def serve_dashboard():
-    return FileResponse("frontend/dashboard.html")
+    return FileResponse("html/dashboard.html")
 
 from fastapi import APIRouter, Depends
 from database import items_col
@@ -357,7 +357,7 @@ def can_submit(user: dict = Depends(get_current_user)):
         return {"can_submit": False, "message": "❌ You’ve reached today’s limit (3 reports). Try again tomorrow."}
     return {"can_submit": True}
 
-# Returns base64 QR image for frontend
+# Returns base64 QR image for html
 @app.get("/api/generate_qr/{item_id}")
 def get_qr_api(item_id: str):
     from ai_matcher import generate_qr_for_item
@@ -367,8 +367,8 @@ def get_qr_api(item_id: str):
 # Serves the QR Page HTML
 @app.get("/qr/{item_id}")
 def serve_qr_page(item_id: str):
-    return FileResponse("frontend/qr_page.html")
+    return FileResponse("html/qr_page.html")
 
 @app.get("/report_lost.html")
 def serve_lost_page():
-    return FileResponse("frontend/report_lost.html")
+    return FileResponse("html/report_lost.html")
