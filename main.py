@@ -25,6 +25,7 @@ UPLOAD_DIR = "uploads"
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/img", StaticFiles(directory="img"), name="img")
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+app.mount("/", StaticFiles(directory="html", html=True), name="html")  # ✅ Serve HTML directly
 
 app.add_middleware(
     CORSMiddleware,
@@ -237,6 +238,10 @@ import os
 
 
 # Serve index, login, signup directly
+
+@app.get("/qr/{item_id}")
+def serve_qr_page(item_id: str):
+    return FileResponse("html/qr_page.html")  # create a dummy static HTML
 
 
 @app.get("/login")
