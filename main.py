@@ -19,14 +19,6 @@ app = FastAPI()
 os.makedirs("uploads", exist_ok=True)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 UPLOAD_DIR = "uploads"
-
-
-# Serve static folders
-app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/img", StaticFiles(directory="img"), name="img")
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
-app.mount("/", StaticFiles(directory="html", html=True), name="html")  # ✅ Serve HTML directly
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -39,7 +31,7 @@ app.include_router(auth_router)
 
 @app.get("/")
 def home():
-    return FileResponse("html/index.html")
+    return FileResponse("frontend/index.html")
 
 @app.post("/report_found")
 async def report_found(
@@ -239,15 +231,18 @@ import os
 
 # Serve index, login, signup directly
 
+@app.get("/qr/{item_id}")
+def serve_qr_page(item_id: str):
+    return FileResponse("frontend/qr_page.html")  # create a dummy static HTML
 
 
 @app.get("/login")
 def serve_login():
-    return FileResponse("html/login.html")
+    return FileResponse("frontend/login.html")
 
 @app.get("/signup")
 def serve_signup():
-    return FileResponse("html/signup.html")
+    return FileResponse("frontend/signup.html")
 
 from fastapi import Body
 from bson import ObjectId
@@ -301,7 +296,7 @@ def get_user_info(user: dict = Depends(get_current_user)):
 
 @app.get("/dashboard")
 def serve_dashboard():
-    return FileResponse("html/dashboard.html")
+    return FileResponse("frontend/dashboard.html")
 
 from fastapi import APIRouter, Depends
 from database import items_col
@@ -362,7 +357,7 @@ def can_submit(user: dict = Depends(get_current_user)):
         return {"can_submit": False, "message": "❌ You’ve reached today’s limit (3 reports). Try again tomorrow."}
     return {"can_submit": True}
 
-# Returns base64 QR image for html
+# Returns base64 QR image for frontend
 @app.get("/api/generate_qr/{item_id}")
 def get_qr_api(item_id: str):
     from ai_matcher import generate_qr_for_item
@@ -372,15 +367,8 @@ def get_qr_api(item_id: str):
 # Serves the QR Page HTML
 @app.get("/qr/{item_id}")
 def serve_qr_page(item_id: str):
-    return FileResponse("html/qr_page.html")
+    return FileResponse("frontend/qr_page.html")
 
 @app.get("/report_lost.html")
 def serve_lost_page():
-    return FileResponse("html/report_lost.html")
-
-@app.get("/{page_name}.html")
-def serve_html_page(page_name: str):
-    path = f"html/{page_name}.html"
-    if os.path.exists(path):
-        return FileResponse(path)
-    raise HTTPException(404, "Page not found")
+    return FileResponse("frontend/report_lost.html")
