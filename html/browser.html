@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Browse Items - LostLink AI</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>🌟 Unclaimed Items</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="feedback.html">Feedback</a>
+    </nav>
+  </header>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('img/browse.avif') no-repeat center center fixed;
+      background-size: cover;
+    }
+  </style>
+
+  <main id="items-container">
+    <!-- browse.html -->
+<div id="itemsGrid" class="grid"></div>
+  </main>
+
+ 
+
+ <footer>
+    <p>LostLink AI © 2025</p>
+  </footer>
+<script>
+  async function loadItems() {
+  const res = await fetch("/browse");
+  const items = await res.json();
+  const grid = document.getElementById("itemsGrid");
+  grid.innerHTML = "";
+
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const priority = item.priority ? '🔥' : '';
+    const call = item.wants_call ? '📞' : '';
+
+    card.innerHTML = `
+      <img src="${item.image_url}" alt="${item.item_name}" />
+      <h3>${item.item_name} ${priority} ${call}</h3>
+      <p>${item.description}</p>
+      <p><strong>Location:</strong> ${item.location}</p>
+      <p><strong>Date:</strong> ${item.date} at ${item.time}</p>
+      <a href="claim.html?item_id=${item._id}"><button>📝 Claim</button></a>
+      `;
+
+    grid.appendChild(card);
+  });
+}
+async function openClaimPrompt(itemId, itemName) {
+  const reason = prompt(`Why do you think "${itemName}" belongs to you?`);
+  const email = prompt("Enter your email to notify the item reporter:");
+
+  if (reason && email) {
+    fetch(`/claim/${itemId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        reason: reason,
+        claimer_email: email
+      })
+    }).then(async res => {
+      const data = await res.json();
+      if (res.ok) {
+        alert("✅ Claim request sent!");
+      } else {
+        alert("❌ " + (data.detail || "Failed to send claim."));
+      }
+    }).catch(err => {
+      alert("❌ Network error");
+      console.error(err);
+    });
+  }
+}
+
+
+
+  loadItems();
+
+  const nav = document.querySelector("nav");
+
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    // Replace Login with Logout
+    const logoutLink = document.createElement("a");
+    logoutLink.href = "#";
+    logoutLink.textContent = "Logout";
+    logoutLink.onclick = () => {
+      localStorage.removeItem("token");
+      alert("🔓 Logged out!");
+      window.location.href = "home.html"; // or login.html if you prefer
+    };
+
+    const loginLink = Array.from(nav.children).find(link => link.textContent === "Login");
+    if (loginLink) {
+      nav.replaceChild(logoutLink, loginLink);
+    } else {
+      nav.appendChild(logoutLink);
+    }
+  }
+</script>
+
+
+</body>
+</html>

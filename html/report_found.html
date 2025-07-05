@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report Found Item - LostLink AI</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div style="background-image: url('img/found.jpg'); background-size: contain;">
+
+  <header>
+    <h1>📢 Report Found Item</h1>
+    <nav>
+      <<a href="index.html">Home</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="browser.html">Browse Items</a>
+      <a href="feedback.html">Feedback</a>
+      <a href = "dashboard.html">Dashboard</a>
+      
+    </nav>
+  </header>
+
+  <main class="centered-form">
+    
+    <form id="reportForm" enctype="multipart/form-data">
+      <label for="item_name">Item Name</label>
+      <input type="text" id="item_name" name="item_name" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <label for="date">Date Found</label>
+      <input type="date" id="date" name="date"required  />
+
+      <label for="time">Time Found</label>
+      <input type="time" id="time" name="time"required  />
+
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" required  />
+
+      <label for="contact_info">Your Email or Phone Number [Email better]</label>
+      <input type="text" id="contact_info" name="contact_info"  required/>
+
+      <label for="image">Upload Image</label>
+      <input type="file" id="image" name="image" accept="image/*" required />
+
+      <label>To Mark as High Priority Click the checkbox below 👇 </label>
+      <input type="checkbox" name="priority" /> 
+
+      <button type="submit">Submit Found Item</button>
+      <p id="responseMsg"></p>
+    </form>
+    
+  </main>
+
+  <footer>
+    <p>LostLink AI © 2025</p>
+  </footer>
+
+ <script>
+  window.onload = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("🔒 Please log in first.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    const form = document.getElementById("reportForm");
+    const msg = document.getElementById("responseMsg");
+
+    const nav = document.querySelector("nav");
+    const logoutLink = document.createElement("a");
+    logoutLink.href = "#";
+    logoutLink.textContent = "Logout";
+    logoutLink.onclick = () => {
+      localStorage.removeItem("token");
+      alert("🔓 Logged out!");
+      window.location.href = "home.html";
+    };
+
+    const loginLink = Array.from(nav.children).find(link => link.textContent === "Login");
+    if (loginLink) nav.replaceChild(logoutLink, loginLink);
+    else nav.appendChild(logoutLink);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const res = await fetch("/report_found", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token
+        },
+        body: formData
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        msg.textContent = "✅ Submitted! You’ll get an email if a match is found.";
+        msg.style.color = "green";
+        form.reset();
+      } else {
+        msg.textContent = "❌ " + (data.detail || "Submission failed.");
+        msg.style.color = "red";
+      }
+
+      msg.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => (msg.textContent = ""), 6000);
+    });
+  };
+</script>
+
+  </div>
+</body>
+</html>

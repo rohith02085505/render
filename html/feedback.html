@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback - LostLink AI</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Optional UX styling */
+    #responseMsg {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('img/log.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>💬 Feedback</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="browser.html">Browse Items</a>
+      <a href="feedback.html">Feedback</a>
+      <a href = "dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="centered-form">
+    <form id="feedbackForm">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Your Email (optional)</label>
+      <input type="email" id="email" name="email" />
+
+      <label for="message">Your Feedback</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">Send Feedback</button>
+      <p id="responseMsg" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <footer>
+    <p>LostLink AI Feedback © 2025</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("feedbackForm");
+    const responseMsg = document.getElementById("responseMsg");
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      responseMsg.innerText = "⏳ Sending feedback...";
+      responseMsg.style.color = "black";
+
+      try {
+        const res = await fetch("/feedback", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          responseMsg.innerText = "✅ Thank you for your feedback!";
+          responseMsg.style.color = "green";
+          form.reset();
+        } else {
+          responseMsg.innerText = "❌ " + (data.detail || "Failed to send feedback.");
+          responseMsg.style.color = "red";
+        }
+      } catch (err) {
+        responseMsg.innerText = "❌ An error occurred. Please try again later.";
+        responseMsg.style.color = "red";
+        console.error("Submission error:", err);
+      }
+    };
+  </script>
+
+  <script>
+    // Token-based login/logout handling
+    const nav = document.querySelector("nav");
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const logoutLink = document.createElement("a");
+      logoutLink.href = "#";
+      logoutLink.textContent = "Logout";
+      logoutLink.onclick = () => {
+        localStorage.removeItem("token");
+        alert("🔓 Logged out!");
+        window.location.href = "home.html";
+      };
+
+      const loginLink = Array.from(nav.children).find(link => link.textContent === "Login");
+      if (loginLink) {
+        nav.replaceChild(logoutLink, loginLink);
+      } else {
+        nav.appendChild(logoutLink);
+      }
+    }
+  </script>
+</body>
+</html>

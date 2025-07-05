@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>What's New – LostLink AI</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f8fc;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #004d7a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    .timeline {
+      max-width: 900px;
+      margin: 40px auto;
+      position: relative;
+      padding: 0 20px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #004d7a;
+      transform: translateX(-50%);
+    }
+    .event {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 40px 0;
+      width: 45%;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .event.left {
+      left: 0;
+    }
+    .event.right {
+      left: 55%;
+    }
+    .event::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      width: 15px;
+      height: 15px;
+      background: #004d7a;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .event.left::after {
+      right: -8px;
+    }
+    .event.right::after {
+      left: -8px;
+    }
+    .version {
+      font-size: 1.2em;
+      color: #004d7a;
+      font-weight: bold;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    @media (max-width: 768px) {
+      .timeline::before {
+        left: 8px;
+      }
+      .event {
+        width: 100%;
+        left: 0 !important;
+        margin-left: 30px;
+      }
+      .event::after {
+        left: -30px !important;
+      }
+    }
+  </style>
+  <style>
+    header nav {
+      margin-top: 10px;
+    }
+    header nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    header nav a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #004d7a;
+      color: white;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+    </style>
+      
+</head>
+<body>
+
+  <header>
+    <h1>🚀 What's New in LostLink AI</h1>
+    <p>Your smart companion for Lost & Found</p>
+    
+      <nav>
+        <a href="index.html">Home</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="browser.html">Browse Items</a>
+      <a href="feedback.html">Feedback</a>
+      <a href = "dashboard.html">Dashboard</a>
+      </nav>
+  </header>
+
+  <section class="timeline">
+
+    <div class="event left">
+      <div class="version">📘 Version 1.0</div>
+      <p>Initial release with core functionality</p>
+      <ul>
+        <li>Lost & Found item reporting</li>
+        <li>Browse and claim flow</li>
+        <li>Cloud Backend integration</li>
+        <li>User login & signup</li>
+        <li>Email notification for claims</li>
+        <li>Admin dashboard</li>
+        <li>Call supports!!!!</li>
+        <li>Semantic Search</li>
+        <li>Claims</li>
+        <li>Feedback system</li>
+        <li>UI/UX Enhancements and more</li>
+      </ul>
+    </div>
+
+    <div class="event right">
+      <div class="version">✨ Version 1.5</div>
+      <p>Enhancements and Better AI integration</p>
+      <ul>
+        <li>Gemini-based smart item matching (beta)</li>
+        <li>TF-IDF fallback for faster AI responses</li>
+        <li>Priority tagging for urgent reports</li>
+        <li>User dashboard to manage reports</li>
+        <li>Visual improvements and feedback system</li>
+        <li>Improved admin tools for claim management</li>
+        <li>Enhanced security and data validation</li> 
+        <li>Better error handling and user guidance</li>
+        <li>Performance optimizations</li>
+        <li>Mobile-friendly design</li>
+        <li>Documentation updates</li> 
+      </ul>
+    </div>
+
+    <div class="event left">
+      <div class="version">🌟 Version 2.0</div>
+      <p>Major update with advanced features</p>
+      <ul>
+        <li>QR code generation for missing items</li>
+        <li>Call alert system (Twilio-ready)</li>
+        <li>Admin-only dashboard and approval flow</li>
+        <li>Flexible AI threshold for high-priority items</li>
+        <li>Daily submission limits & abuse prevention</li>
+        <li>Clean UI & polished deployment-ready code</li>
+        <li>Improved item matching accuracy</li>
+        <li>Enhanced user experience with better navigation</li>    
+        <li>Robust error handling and logging</li>
+        <li>Mobile responsiveness and accessibility improvements</li>   
+      </ul>
+    </div>
+  </section>
+    <footer>
+        <p>LostLink AI © 2025</p>
+    </footer>
+</body>
+</html>

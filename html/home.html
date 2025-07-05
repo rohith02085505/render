@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LostLink AI - A smart lost & found platform powered by AI." />
+  <title>LostLink AI - Smart Lost & Found</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('img/browse.avif') no-repeat center center fixed;
+      background-size: cover;
+    }
+  </style>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f9fb;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: #0077cc;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Header */
+    .site-header {
+      background-color: #1a1a2e;
+      color: #fff;
+      padding: 20px;
+      flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
+    }
+    
+
+    .site-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      align-content: center;
+      align-items: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-content: center;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      
+    }
+
+    .nav-links li a:hover {
+      color: #00adb5;
+    }
+
+    /* Main Content */
+    main {
+      padding: 30px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      color: #1a1a2e;
+      margin-bottom: 15px;
+    }
+
+    .intro p {
+      font-size: 1.1rem;
+      background: #e3f2fd;
+      padding: 15px;
+      border-left: 5px solid #2196f3;
+      border-radius: 5px;
+    }
+
+    .features ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .features li {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .features h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: #0077cc;
+    }
+
+    /* Stats Section */
+    .stats ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .stats li {
+      background: #fafafa;
+      border: 1px solid #ccc;
+      padding: 15px 20px;
+      border-radius: 6px;
+      flex: 1 1 200px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1a1a2e;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .nav-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <h1>🏠 LostLink AI</h1>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html" id="loginLink">Try it out!</a></li>
+        <li><a href="login.html" id="loginLink">Login</a></li>
+        <li><a href="signup.html" id="signupLink">Signup</a></li>
+        <li><a href="report_lost.html">Report Lost</a></li>
+        <li><a href="report_found.html">Report Found</a></li>
+        <li><a href="browser.html">Browse Items</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="#" id="logoutLink" style="display: none;">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <section class="intro">
+      <h2>🔗 About LostLink AI</h2>
+      <p>
+        <strong>LostLink AI</strong> is a powerful AI-driven Lost &amp; Found system that makes item recovery smarter, faster, and effortless.
+      </p>
+      <p>LostLink AI isn’t just a tool—it’s your smart recovery companion.<br>
+<i>Recover what matters.</i><b> Fast.</b> </p>
+    </section>
+
+    <section class="features">
+      <ul>
+        <li>
+          <h3>🚀 Instant AI Matching</h3>
+          <p>Uses Senetence Transfromers for smart semantic matching—finds results even if descriptions are different.</p>
+        </li>
+        <li>
+          <h3>📬 Smart Email Notifications</h3>
+          <p>Auto-email alerts ensure quick contact when items match—no delays.</p>
+        </li>
+        <li>
+          <h3>📞 Call Alerts for Priority Cases</h3>
+          <p>YES!! YOU READ IT RIGHT</p>
+          <p>Mark as High Priority and the AI agent will directly call possible matches.</p>
+        </li>
+        <li>
+          <h3>⚡ Fast & Easy to Use</h3>
+          <p>Sleek forms, photo uploads, and instant results—no technical skills required.</p>
+        </li>
+        <li>
+          <h3>🧠 Always-On AI Agent</h3>
+          <p>AI keeps scanning even after you leave—notifications will follow.</p>
+        </li>
+        <li>
+          <h3>🔥 What Makes LostLink AI Different?</h3>
+          <p>Semantic AI, Automated matches, and Designed for speed, clarity, and real success.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="stats">
+      <h2>📈 Statistics</h2>
+      <ul>
+        <li><strong>Total Reports:</strong> 300+</li>
+        <li><strong>Successful Cases:</strong> 290 and counting...😃</li>
+        
+      </ul>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>LostLink AI © 2025</p>
+    <p>Built with ♥ by Rohith</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Fetch statistics from backend
+    fetch("/stats")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("totalCount").textContent = data.total || 0;
+        document.getElementById("lostCount").textContent = data.lost || 0;
+        document.getElementById("foundCount").textContent = data.found || 0;
+      })
+      .catch(err => console.error("Error loading stats:", err));
+
+    // Handle login/logout UI
+    const token = localStorage.getItem("token");
+    const loginLink = document.getElementById("loginLink");
+    const signupLink = document.getElementById("signupLink");
+    const logoutLink = document.getElementById("logoutLink");
+
+    if (token) {
+      loginLink.style.display = "none";
+      signupLink.style.display = "none";
+      logoutLink.style.display = "inline-block";
+
+      logoutLink.onclick = () => {
+        localStorage.removeItem("token");
+        alert("🔓 Logged out!");
+        window.location.href = "home.html";
+      };
+    } else {
+      logoutLink.style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

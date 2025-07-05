@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Claim Item - LostLink AI</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('img/log.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+  </style>
+<body>
+  <header>
+    <h1>🔐 Claim Your Item</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="feedback.html">Feedback</a>
+    </nav>
+  </header>
+
+  <main class="centered-form">
+    <form id="claimForm">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="contact">Your Contact Info</label>
+      <input type="text" id="contact" name="contact" required />
+
+      <label for="proof">Proof of Ownership (Optional)</label>
+      <textarea id="proof" name="proof"></textarea>
+
+      <input type="hidden" id="item_id" name="item_id" />
+
+      <button type="submit">Submit Claim</button>
+      <p id="responseMsg"></p>
+    </form>
+  </main>
+
+  <footer>
+    <p>LostLink AI © 2025</p>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get("item_id");
+    document.getElementById("item_id").value = itemId;
+
+    const form = document.getElementById("claimForm");
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      const res = await fetch(`/claim/${itemId}`, {
+        method: "POST",
+        body: formData
+      });
+
+      if (res.ok) {
+        document.getElementById("responseMsg").innerText = "✅ Claim submitted! Admin will review soon.";
+        alert("✅ Claim requested!");
+      } else {
+        const data = await res.json();
+        document.getElementById("responseMsg").innerText = "❌ " + (data.detail || "Failed to submit claim.");
+        alert("❌ Claim failed.");
+      }
+    };
+  </script>
+  <script>
+  const nav = document.querySelector("nav");
+
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    // Replace Login with Logout
+    const logoutLink = document.createElement("a");
+    logoutLink.href = "#";
+    logoutLink.textContent = "Logout";
+    logoutLink.onclick = () => {
+      localStorage.removeItem("token");
+      alert("🔓 Logged out!");
+      window.location.href = "home.html"; // or login.html if you prefer
+    };
+
+    const loginLink = Array.from(nav.children).find(link => link.textContent === "Login");
+    if (loginLink) {
+      nav.replaceChild(logoutLink, loginLink);
+    } else {
+      nav.appendChild(logoutLink);
+    }
+  }
+</script>
+
+</body>
+</html>

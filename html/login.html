@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - LostLink AI</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('img/log.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔐 Login - LostLink AI</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="whats_new.html">What’s New</a>
+      <a href="signup.html">Signup</a>
+      <a href="login.html">Login</a> <!-- Add Login link for replacement -->
+    </nav>
+  </header>
+
+  <main class="centered-form">
+    <form id="loginForm">
+      <h2>Welcome Back</h2>
+      
+      <label for="email">📧 Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">🔑 Password</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">Login</button>
+
+      <p id="loginMessage"></p>
+    </form>
+  </main>
+
+  <footer>
+    <p>LostLink AI © 2025</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const email = form.email.value;
+      const password = form.password.value;
+
+      try {
+        const res = await fetch("/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem("token", data.access_token);
+          document.getElementById("loginMessage").innerText = "✅ Login successful!";
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1000);
+        } else {
+          document.getElementById("loginMessage").innerText = "❌ " + (data.detail || "Login failed");
+        }
+      } catch (err) {
+        document.getElementById("loginMessage").innerText = "❌ Network error";
+      }
+    };
+  </script>
+
+  <script>
+    const nav = document.querySelector("nav");
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const logoutLink = document.createElement("a");
+      logoutLink.href = "#";
+      logoutLink.textContent = "Logout";
+      logoutLink.onclick = () => {
+        localStorage.removeItem("token");
+        alert("🔓 Logged out!");
+        window.location.href = "login.html";
+      };
+
+      const loginLink = Array.from(nav.children).find(link => link.textContent === "Login");
+      if (loginLink) {
+        nav.replaceChild(logoutLink, loginLink);
+      } else {
+        nav.appendChild(logoutLink);
+      }
+    }
+  </script>
+</body>
+</html>

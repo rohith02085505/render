@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report Lost Item - LostLink AI</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ✅ background image applied to a wrapper div -->
+  <div style="background-image: url('img/report.jpg'); background-size: cover;">
+
+    <header>
+      <h1>📢 Report Lost Item</h1>
+      <nav>
+        <a href="index.html">Home</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="browser.html">Browse Items</a>
+      <a href="feedback.html">Feedback</a>
+      <a href = "dashboard.html">Dashboard</a>
+      </nav>
+    </header>
+
+    <main class="centered-form">
+      <form id="reportForm" enctype="multipart/form-data">
+        <label for="item_name">Item Name</label>
+        <input type="text" id="item_name" name="item_name" required />
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="date">Date Lost</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="time">Time Lost</label>
+        <input type="time" id="time" name="time" required />
+
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" required />
+
+        <label for="contact_info">Your Email or Phone Number</label>
+        <input type="text" id="contact_info" name="contact_info" required />
+
+        <label for="image">Upload Image</label>
+        <input type="file" id="image" name="image" accept="image/*" required />
+
+        <label><input type="checkbox" name="priority" /> To Mark as High Priority Click the checkbox above 👆</label>
+        <label><input type="checkbox" name="wants_call" /> To get a call if a match is found click the box above and enter only your Phone Number along with country code [Format:+91xxxxxxxxxx]</label>
+        <label><input type="checkbox" name="generate_qr"> Generate QR Code Page</label>
+        <button type="submit">Submit Lost Item</button>
+        <p id="responseMsg"></p>
+      </form>
+    </main>
+
+    <footer>
+      <p>LostLink AI © 2025</p>
+    </footer>
+
+  </div>
+
+  <!-- ✅ JavaScript placed before </body> -->
+<script>
+  async function checkLimitAndSubmit(event) {
+    event.preventDefault(); // Prevent actual form submission
+
+    const token = localStorage.getItem("token");
+    const msg = document.getElementById("responseMsg");
+    const form = document.getElementById("reportForm");
+
+    // Check submit limit
+    const limitCheck = await fetch("/can_submit", {
+
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const limitData = await limitCheck.json();
+    if (!limitData.can_submit) {
+      alert(limitData.message);
+      return;
+    }
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/report_lost", {
+
+        method: "POST",
+        headers: { Authorization: "Bearer " + token },
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        msg.textContent = data.message || "✅ Submitted successfully!";
+        msg.className = "success";
+
+        if (data.wants_call) {
+          alert("📞 This feature requires a small payment. Admin will review your request.");
+        }
+
+        if (form.querySelector("input[name='generate_qr']").checked && data.item_id) {
+          const qrLink = `/qr/${data.item_id}`;
+          const qrBtn = document.createElement("a");
+          qrBtn.href = qrLink;
+          qrBtn.target = "_blank";
+          qrBtn.innerText = "📎 View QR Code Page";
+          qrBtn.style.display = "block";
+          form.after(qrBtn);
+        }
+
+        form.reset();
+      } else {
+        msg.textContent = "❌ " + (data.detail || "Failed to submit.");
+        msg.className = "error";
+      }
+    } catch (error) {
+      msg.textContent = "❌ Network error.";
+      msg.className = "error";
+    }
+
+    msg.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      msg.textContent = "";
+      msg.className = "";
+    }, 10000);
+  }
+
+  window.onload = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("🔒 Please log in first.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    const nav = document.querySelector("nav");
+    const logoutLink = document.createElement("a");
+    logoutLink.href = "#";
+    logoutLink.textContent = "Logout";
+    logoutLink.onclick = () => {
+      localStorage.removeItem("token");
+      alert("🔓 Logged out!");
+      window.location.href = "home.html";
+    };
+
+    const loginLink = Array.from(nav.children).find(link => link.textContent === "Login");
+    if (loginLink) nav.replaceChild(logoutLink, loginLink);
+    else nav.appendChild(logoutLink);
+
+    // ✅ Attach submission listener once DOM is ready
+    const form = document.getElementById("reportForm");
+    form.addEventListener("submit", checkLimitAndSubmit);
+  };
+</script>
+</body>
+</html>

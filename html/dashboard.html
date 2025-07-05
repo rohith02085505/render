@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard - LostLink AI</title>
+   
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f6fc;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #0047ab;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      color: #0047ab;
+      margin-top: 2rem;
+    }
+    .section {
+      padding: 1rem 2rem;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .card {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      width: 250px;
+    }
+    .card h4 {
+      margin: 0.5rem 0;
+      color: #0047ab;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .card button {
+      background-color: #d9534f;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .card button:hover {
+      background-color: #c9302c;
+    }
+  </style>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('img/desk.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .name{
+        font-size: 1.5rem;
+        background-color: antiquewhite;
+        padding: 0.5rem;
+        align-items: center;
+        text-align: center;
+        border-radius: 5px;
+        color: #b43636;
+        margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>🔍 LostLink AI</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="report_lost.html">Report Lost</a>
+      <a href="report_found.html">Report Found</a>
+      <a href="browser.html">Browse Items</a>
+      <a href="feedback.html">Feedback</a>
+      <a href = "dashboard.html">Dashboard</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <h2>👤 Your Dashboard</h2>
+
+  <section class="section">
+    <h3 class="name">📌 Reported Lost Items</h3>
+    <div id="lostSection" class="cards"></div>
+  </section>
+
+  <section class="section">
+    <h3 class="name">📦 Reported Found Items</h3>
+    <div id="foundSection" class="cards"></div>
+  </section>
+
+  <script>
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("🔒 Please login first.");
+      window.location.href = "login.html";
+    }
+
+    async function fetchDashboard() {
+      const res = await fetch("/user/dashboard", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+      renderCards("lostSection", data.lost_reports);
+      renderCards("foundSection", data.found_reports);
+    }
+
+    function renderCards(containerId, items) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+
+      if (!items.length) {
+        container.innerHTML = "<p>No items reported yet.</p>";
+        return;
+      }
+
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <h4>${item.item_name}</h4>
+          <p><b>Location:</b> ${item.location}</p>
+          <p><b>Date:</b> ${item.date}, ${item.time}</p>
+          <p><b>Status:</b> ${item.is_claimed ? "Claimed" : "Unclaimed"}</p>
+          <button onclick="deleteItem('${item._id}')">Delete</button>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    async function deleteItem(id) {
+      if (!confirm("Are you sure you want to delete this report?")) return;
+
+      await fetch(`/items/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      fetchDashboard();
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      alert("🔓 Logged out.");
+      window.location.href = "login.html";
+    }
+
+    fetchDashboard();
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lost Item QR - LostLink AI</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f8ff;
+      margin: 0;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      color: #0047ab;
+      margin-bottom: 1rem;
+    }
+
+    .qr-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+
+    .qr-box img {
+      max-width: 280px;
+      margin-top: 1rem;
+    }
+
+    .info {
+      margin-top: 2rem;
+      color: #444;
+    }
+
+    .ads {
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: #e1f5fe;
+      border-left: 5px solid #0288d1;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>📌 Missing Item Information</h1>
+  <div class="qr-box">
+    <p>Scan this QR code to report a match or share this page:</p>
+    <img id="qrImage" src="" alt="QR Code will appear here"/>
+  </div>
+
+  <div class="info">
+    <p>This QR was generated for an item reported on LostLink AI. If you found something matching this, please contact the owner!</p>
+  </div>
+
+  <div class="ads">
+    <strong>Ad Space:</strong> Help keep LostLink AI free! Your ad could be here.
+  </div>
+
+  <script>
+    async function loadQR() {
+      const itemId = window.location.pathname.split("/").pop();
+      const res = await fetch(`/api/generate_qr/${itemId}`);
+      const data = await res.json();
+
+      document.getElementById("qrImage").src = data.qr;
+    }
+
+    loadQR();
+  </script>
+</body>
+</html>
