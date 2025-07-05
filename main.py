@@ -372,3 +372,11 @@ def serve_qr_page(item_id: str):
 @app.get("/report_lost.html")
 def serve_lost_page():
     return FileResponse("html/report_lost.html")
+
+
+@app.get("/{page_name}", include_in_schema=False)
+def serve_page(page_name: str):
+    file_path = f"html/{page_name}"
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    return {"detail": "Page not found"}, 404
