@@ -95,7 +95,7 @@ def get_stats():
 
 from fastapi import Depends
   # or however you're getting current user
-from ai_matcher import match_with_tfidf,generate_qr_for_item
+from ai_matcher import match_with_tfidf
 @app.post("/report_lost")
 async def report_lost(
     item_name: str = Form(...),
@@ -152,7 +152,7 @@ async def report_lost(
         "message": "Lost item reported successfully.",
         "item_id": item_id,
         "wants_call": wants_call,
-        "generate_qr": generate_qr_for_item
+        
     }
 from fastapi import Query
 from typing import Optional
