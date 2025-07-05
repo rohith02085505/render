@@ -239,10 +239,6 @@ import os
 
 # Serve index, login, signup directly
 
-@app.get("/qr/{item_id}")
-def serve_qr_page(item_id: str):
-    return FileResponse("html/qr_page.html")  # create a dummy static HTML
-
 
 @app.get("/login")
 def serve_login():
