@@ -244,25 +244,12 @@ import os
 def serve_qr_page(item_id: str):
     return FileResponse("html/qr_page.html")  # create a dummy static HTML
 
-class LoginRequest(BaseModel):
-    email: str
-    password: str
+
 
 from passlib.hash import bcrypt
 
 from fastapi import Request
 
-@app.post("/login")
-async def login(request: Request):
-    data = await request.json()
-    email = data.get("email")
-    password = data.get("password")
-
-    user = users_col.find_one({"email": email})
-    if not user or not bcrypt.verify(password, user["password"]):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-
-    return {"access_token": "dummy-token"}
 
 
 @app.get("/login")
