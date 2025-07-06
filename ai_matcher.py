@@ -86,7 +86,7 @@ import base64
 
 def generate_qr_for_item(item_id: str):
     # The URL that QR should encode
-    qr_text = f"https://lostlink.ai/qr/{item_id}"  # Replace with real domain
+    qr_text = f"https://lostlink-03c3.onrender.com/qr/{item_id}"  # Replace with real domain
 
     qr = qrcode.make(qr_text)
     buffer = BytesIO()
