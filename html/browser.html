@@ -49,8 +49,8 @@
     const card = document.createElement("div");
     card.className = "card";
 
-    const priority = item.priority ? '🔥' : '';
-    const call = item.wants_call ? '📞' : '';
+    const priority = item.priority ? '🔥Priority' : '';
+    const call = item.wants_call ? '📞Call' : '';
 
     card.innerHTML = `
       <img src="${item.image_url}" alt="${item.item_name}" />
