@@ -56,27 +56,28 @@ def match_with_tfidf(new_item):
     all_items = list(items_col.find({"type": "found", "is_claimed": False}))
     if not all_items:
         print("No found items to match against.")
-        return
+        return []
 
     descriptions = [item["description"] for item in all_items]
     descriptions.append(new_item["description"])
 
-    # TF-IDF Vectorization
     vectorizer = TfidfVectorizer().fit_transform(descriptions)
     vectors = vectorizer.toarray()
 
-    # Compare new item to all others
     similarities = cosine_similarity([vectors[-1]], vectors[:-1])[0]
 
-    best_index = similarities.argmax()
-    best_score = similarities[best_index]
+    matches = []
+    for idx, score in enumerate(similarities):
+        if score >= 0.75:
+            matched_item = all_items[idx]
+            print(f"🔍 TF-IDF Match Found: {matched_item['item_name']} (Score: {score:.2f})")
+            ai_agent_notify(matched_item, new_item)
+            matches.append(matched_item)
 
-    if best_score > 0.75:  # You can lower threshold if needed
-        best_match = all_items[best_index]
-        print(f"🔍 TF-IDF Match Found: {best_match['item_name']} (Score: {best_score:.2f})")
-        # Optional: send email, log match, etc.
-    else:
+    if not matches:
         print("❌ No strong TF-IDF match found.")
+
+    return matches
 
 
 import qrcode
