@@ -61,11 +61,20 @@ def signup(user: User):
     return {"message": "User created successfully"}
 
 # Login route (with password verification)
+
+
+from fastapi import Request
+
 @router.post("/login")
-def login(user: User):
-    found = users_col.find_one({"email": user.email})
-    if not found or not pwd_context.verify(user.password, found["password"]):
+async def login(request: Request):
+    data = await request.json()
+    email = data.get("email")
+    password = data.get("password")
+
+    found = users_col.find_one({"email": email})
+    if not found or not pwd_context.verify(password, found["password"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    token = create_token({"sub": user.email})
+    token = create_token({"sub": email})
     return {"access_token": token}
+
