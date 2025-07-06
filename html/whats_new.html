@@ -7,24 +7,26 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f8fc;
+      background: linear-gradient(to right, #eef2f3, #ffffff);
       margin: 0;
       padding: 0;
       color: #333;
+      line-height: 1.6;
     }
     header {
-      background-color: #004d7a;
+      background: linear-gradient(to right, #004d7a, #0079a3);
       color: white;
-      padding: 20px;
+      padding: 30px 20px;
       text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     h1 {
       margin: 0;
-      font-size: 2em;
+      font-size: 2.5em;
     }
     .timeline {
-      max-width: 900px;
-      margin: 40px auto;
+      max-width: 1000px;
+      margin: 50px auto;
       position: relative;
       padding: 0 20px;
     }
@@ -35,47 +37,70 @@
       top: 0;
       bottom: 0;
       width: 4px;
-      background: #004d7a;
+      background: #0079a3;
       transform: translateX(-50%);
     }
     .event {
       background: white;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 40px 0;
-      width: 45%;
+      border-radius: 12px;
+      padding: 25px;
+      margin: 50px 0;
+      width: 46%;
       position: relative;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
     .event.left {
       left: 0;
     }
     .event.right {
-      left: 55%;
+      left: 54%;
     }
     .event::after {
       content: '';
       position: absolute;
       top: 20px;
-      width: 15px;
-      height: 15px;
-      background: #004d7a;
+      width: 16px;
+      height: 16px;
+      background: #0079a3;
+      border: 3px solid white;
       border-radius: 50%;
       z-index: 1;
     }
     .event.left::after {
-      right: -8px;
+      right: -10px;
     }
     .event.right::after {
-      left: -8px;
+      left: -10px;
     }
     .version {
-      font-size: 1.2em;
+      font-size: 1.4em;
       color: #004d7a;
       font-weight: bold;
+      margin-bottom: 10px;
     }
     ul {
       padding-left: 20px;
+    }
+    header nav {
+      margin-top: 10px;
+    }
+    header nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    header nav a:hover {
+      text-decoration: underline;
+      color: #ffdd57;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #004d7a;
+      color: white;
+      width: 100%;
     }
     @media (max-width: 768px) {
       .timeline::before {
@@ -90,105 +115,140 @@
         left: -30px !important;
       }
     }
-  </style>
-  <style>
-    header nav {
-      margin-top: 10px;
+    .blog-section {
+      max-width: 900px;
+      margin: 60px auto;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
-    header nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
+    .blog-section h2 {
+      color: #004d7a;
+      font-size: 1.8em;
+      margin-bottom: 20px;
     }
-    header nav a:hover {
-      text-decoration: underline;
+    .blog-section p {
+      font-size: 1.1em;
     }
-    footer {
+    .get-in-touch {
+      margin-top: 30px;
       text-align: center;
-      padding: 20px;
-      background-color: #004d7a;
-      color: white;
-      position: relative;
-      bottom: 0;
-      width: 100%;
     }
-    </style>
-      
+    .get-in-touch p {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+    }
+    .get-in-touch a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 25px;
+      background-color: #0079a3;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .get-in-touch a:hover {
+      background-color: #005f80;
+    }
+  </style>
 </head>
 <body>
-
   <header>
     <h1>🚀 What's New in LostLink AI</h1>
     <p>Your smart companion for Lost & Found</p>
-    
-      <nav>
-        <a href="index.html">Home</a>
+    <nav>
+      <a href="index.html">Home</a>
       <a href="report_lost.html">Report Lost</a>
       <a href="report_found.html">Report Found</a>
       <a href="browser.html">Browse Items</a>
       <a href="feedback.html">Feedback</a>
-      <a href = "dashboard.html">Dashboard</a>
-      </nav>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
   </header>
 
   <section class="timeline">
+  <div class="event left">
+    <div class="version">📘 Version 1.0</div>
+    <p>Initial release with core functionality</p>
+    <ul>
+      <li>Lost & Found item reporting</li>
+      <li>Browse and claim flow</li>
+      <li>Cloud Backend integration</li>
+      <li>User login & signup</li>
+      <li>Email notification for claims</li>
+      <li>Admin dashboard</li>
+      <li>Call supports!!!!</li>
+      <li>Semantic Search</li>
+      <li>Claims</li>
+      <li>Feedback system</li>
+      <li>UI/UX Enhancements and more</li>
+    </ul>
+  </div>
 
-    <div class="event left">
-      <div class="version">📘 Version 1.0</div>
-      <p>Initial release with core functionality</p>
-      <ul>
-        <li>Lost & Found item reporting</li>
-        <li>Browse and claim flow</li>
-        <li>Cloud Backend integration</li>
-        <li>User login & signup</li>
-        <li>Email notification for claims</li>
-        <li>Admin dashboard</li>
-        <li>Call supports!!!!</li>
-        <li>Semantic Search</li>
-        <li>Claims</li>
-        <li>Feedback system</li>
-        <li>UI/UX Enhancements and more</li>
-      </ul>
-    </div>
+  <div class="event right">
+    <div class="version">✨ Version 1.5</div>
+    <p>Enhancements and Better AI integration</p>
+    <ul>
+      <li>Gemini-based smart item matching (beta)</li>
+      <li>TF-IDF fallback for faster AI responses</li>
+      <li>Priority tagging for urgent reports</li>
+      <li>User dashboard to manage reports</li>
+      <li>Visual improvements and feedback system</li>
+      <li>Improved admin tools for claim management</li>
+      <li>Enhanced security and data validation</li>
+      <li>Better error handling and user guidance</li>
+      <li>Performance optimizations</li>
+      <li>Mobile-friendly design</li>
+      <li>Documentation updates</li>
+    </ul>
+  </div>
 
-    <div class="event right">
-      <div class="version">✨ Version 1.5</div>
-      <p>Enhancements and Better AI integration</p>
-      <ul>
-        <li>Gemini-based smart item matching (beta)</li>
-        <li>TF-IDF fallback for faster AI responses</li>
-        <li>Priority tagging for urgent reports</li>
-        <li>User dashboard to manage reports</li>
-        <li>Visual improvements and feedback system</li>
-        <li>Improved admin tools for claim management</li>
-        <li>Enhanced security and data validation</li> 
-        <li>Better error handling and user guidance</li>
-        <li>Performance optimizations</li>
-        <li>Mobile-friendly design</li>
-        <li>Documentation updates</li> 
-      </ul>
-    </div>
+  <div class="event left">
+    <div class="version">🌟 Version 2.0</div>
+    <p>Major update with advanced features</p>
+    <ul>
+      <li>QR code generation for missing items</li>
+      <li>Call alert system (Twilio-ready)</li>
+      <li>Admin-only dashboard and approval flow</li>
+      <li>Flexible AI threshold for high-priority items</li>
+      <li>Daily submission limits & abuse prevention</li>
+      <li>Clean UI & polished deployment-ready code</li>
+      <li>Improved item matching accuracy</li>
+      <li>Enhanced user experience with better navigation</li>
+      <li>Robust error handling and logging</li>
+      <li>Mobile responsiveness and accessibility improvements</li>
+      <li>AI-driven claim suggestions for faster verification</li>
+      <li>Static QR-linked flyer pages for sharing & search</li>
+      <li>Email collection for premium call alerts</li>
+      <li>Dynamic similarity engine (Gemini or TF-IDF switch)</li>
+      <li>Fully token-authenticated user system</li>
+    </ul>
+  </div>
+</section>
 
-    <div class="event left">
-      <div class="version">🌟 Version 2.0</div>
-      <p>Major update with advanced features</p>
-      <ul>
-        <li>QR code generation for missing items</li>
-        <li>Call alert system (Twilio-ready)</li>
-        <li>Admin-only dashboard and approval flow</li>
-        <li>Flexible AI threshold for high-priority items</li>
-        <li>Daily submission limits & abuse prevention</li>
-        <li>Clean UI & polished deployment-ready code</li>
-        <li>Improved item matching accuracy</li>
-        <li>Enhanced user experience with better navigation</li>    
-        <li>Robust error handling and logging</li>
-        <li>Mobile responsiveness and accessibility improvements</li>   
-      </ul>
+  <section class="blog-section">
+    <h2>🛠️ How LostLink AI Was Crafted</h2>
+    <p>
+      🔧 Every part of the system – from the frontend to the AI engine – was built from scratch,
+      focusing on 𝐬𝐢𝐦𝐩𝐥𝐢𝐜𝐢𝐭𝐲,𝐬𝐩𝐞𝐞𝐝, 𝐚𝐧𝐝 𝐮𝐬𝐚𝐛𝐢𝐥𝐢𝐭𝐲. No heavy frameworks, just 𝐜𝐥𝐞𝐚𝐧 𝐥𝐨𝐠𝐢𝐜 𝐚𝐧𝐝 𝐭𝐡𝐨𝐮𝐠𝐡𝐭𝐟𝐮𝐥 𝐝𝐞𝐬𝐢𝐠𝐧.
+    </p>
+    <p>
+      LostLink AI began as a simple idea: to make the recovery of lost items intelligent, fast, and secure.
+      It evolved through multiple iterations of design, logic and tuning. Our mission has always been user-first — ensuring each report, each claim,
+      and each match feels natural and helpful.Hit the feedback button to tell us what u think🙌.
+    </p>
+    <div class="get-in-touch">
+      <p>Want to collaborate or get in touch with the developers?</p>
+      <a href="https://www.linkedin.com/in/rohith-a-m-4a8aba26b/" target="_blank">Connect with Rohith</a>
+      <a href="https://www.linkedin.com/in/rohan-a-m-0382a2324/" target="_blank">Connect with Rohan</a>
     </div>
   </section>
-    <footer>
-        <p>LostLink AI © 2025</p>
-    </footer>
+
+  <footer>
+    <p>LostLink AI © 2025</p>
+  </footer>
 </body>
 </html>
