@@ -1,29 +1,38 @@
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from database import users_col
 from jose import jwt, JWTError
+from passlib.context import CryptContext
 from datetime import datetime, timedelta
 import os
 
 router = APIRouter()
 
+# JWT settings
 SECRET = os.getenv("JWT_SECRET", "secret123")
 ALGORITHM = "HS256"
 TOKEN_EXPIRE_MIN = 60 * 24
 
-class User(BaseModel):
-    email: str
-    password: str  # In production, hash this
+# Password hashing setup
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+# Auth scheme
 security = HTTPBearer()
 
+# User model
+class User(BaseModel):
+    email: str
+    password: str
+
+# Token creation
 def create_token(data: dict):
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=TOKEN_EXPIRE_MIN)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET, algorithm=ALGORITHM)
 
+# Token validation
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials
     try:
@@ -31,22 +40,26 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         email = payload.get("sub")
         if email is None:
             raise HTTPException(status_code=401, detail="Invalid token")
-        return {"email": email}  # ✅ Fix: return a dict
+        return {"email": email}
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-
+# Signup route (with password hashing)
 @router.post("/signup")
 def signup(user: User):
     if users_col.find_one({"email": user.email}):
         raise HTTPException(status_code=400, detail="Email already registered")
-    users_col.insert_one(user.dict())
+
+    hashed_pw = pwd_context.hash(user.password)
+    users_col.insert_one({"email": user.email, "password": hashed_pw})
     return {"message": "User created successfully"}
 
+# Login route (with password verification)
 @router.post("/login")
 def login(user: User):
-    found = users_col.find_one({"email": user.email, "password": user.password})
-    if not found:
+    found = users_col.find_one({"email": user.email})
+    if not found or not pwd_context.verify(user.password, found["password"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
+
     token = create_token({"sub": user.email})
     return {"access_token": token}
