@@ -64,7 +64,7 @@
     const data = await res.json();
 
     if (res.ok) {
-      localStorage.setItem("token", data.access_token); // ✅ moved inside
+      // localStorage.setItem("token", data.access_token); // ✅ moved inside
       document.getElementById("signupMessage").innerText = "✅ Signup successful!";
       setTimeout(() => {
         window.location.href = "login.html";
