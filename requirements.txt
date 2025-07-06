@@ -13,4 +13,4 @@ twilio==9.6.3
 pyttsx3==2.98
 pillow==11.2.1
 python-multipart
-pip install passlib[bcrypt]
+passlib[bcrypt]
