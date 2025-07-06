@@ -22,8 +22,10 @@ security = HTTPBearer()
 
 # User model
 class User(BaseModel):
+    name: str
     email: str
     password: str
+
 
 # Token creation
 def create_token(data: dict):
@@ -51,7 +53,11 @@ def signup(user: User):
         raise HTTPException(status_code=400, detail="Email already registered")
 
     hashed_pw = pwd_context.hash(user.password)
-    users_col.insert_one({"email": user.email, "password": hashed_pw})
+    users_col.insert_one({
+    "name": user.name,
+    "email": user.email,
+    "password": hashed_pw
+})
     return {"message": "User created successfully"}
 
 # Login route (with password verification)
