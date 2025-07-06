@@ -2,6 +2,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 import google.generativeai as genai
+from pydantic import BaseModel
 model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")
 from fastapi import FastAPI, Request, UploadFile, File, Form, Depends , HTTPException
 from fastapi.middleware.cors import CORSMiddleware
