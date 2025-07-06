@@ -166,6 +166,7 @@
       <a href="feedback.html">Feedback</a>
       <a href="dashboard.html">Dashboard</a>
       <a href="whats_new.html">What’s New</a>
+      <a href="home.html">About</a>a>
     </nav>
   </header>
 
@@ -216,7 +217,7 @@
   <footer>
     &copy; 2025 LostLink AI. Built with ❤️ By Rohith and Rohan.
   </footer>
-
+  
   <script>
     const nav = document.querySelector("nav");
     const token = localStorage.getItem("token");
@@ -250,5 +251,11 @@
 
     loadStats();
   </script>
+  <script>
+  window.addEventListener('load', () => {
+    document.getElementById('loader').style.display = 'none';
+  });
+</script>
+
 </body>
 </html>
