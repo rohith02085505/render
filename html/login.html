@@ -6,6 +6,7 @@
   <title>Login - LostLink AI</title>
   <link rel="stylesheet" href="/static/style.css" />
 
+
   <style>
     body {
       margin: 0;
@@ -13,6 +14,22 @@
       background: url('/img/log.png') no-repeat center center fixed;
       background-size: cover;
     }
+    header, footer {
+  background-color:#546FAB;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+#login
+{
+  background-color: #4a2a44;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
   </style>
 </head>
 <body>
@@ -36,7 +53,8 @@
       <label for="password">🔑 Password</label>
       <input type="password" id="password" name="password" required />
 
-      <button type="submit">Login</button>
+      <button type="submit" id = "login">Login</button>
+      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
 
       <p id="loginMessage"></p>
     </form>
@@ -54,7 +72,8 @@
       const password = form.password.value;
 
       try {
-        const res = await fetch("/login", {
+         const res = await fetch("/login", {
+        
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })

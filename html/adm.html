@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - LostLink AI</title>
+  <script src="/static/auth.js"></script>
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    body { margin:0; padding:0; background:url('/img/browse.avif') no-repeat center center fixed; background-size:cover;
+      font-family:'Segoe UI',sans-serif; color:#333; min-height:100vh; display:flex; flex-direction:column;}
+    header { background:#0047ab; color:white; padding:1rem 2rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center;}
+    header h1 { margin:0; font-size:1.8rem; flex:1 1 100%;}
+    main { flex:1 1 auto; padding:2rem; max-width:1200px; margin:0 auto 2rem auto; background:rgba(255,255,255,0.9); border-radius:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2);}
+    section { margin-bottom:2rem;}
+    section h2 { margin-bottom:1rem; color:#0047ab; border-bottom:2px solid #0047ab; padding-bottom:0.3rem;}
+    .grid { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
+    .card { background:white; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:1rem; width:280px; display:flex; flex-direction:column; align-items:center; text-align:center;}
+    .card img { width:100%; height:160px; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;}
+    .card h3 { margin:0.5rem 0; color:#0047ab; font-size:1.2rem;}
+    .badge { background:#ffcc00; color:#333; border-radius:12px; padding:2px 8px; font-size:0.8rem; margin-left:5px;}
+    table { width:100%; border-collapse:collapse;}
+    th,td { border:1px solid #ccc; padding:0.6rem; text-align:left;}
+    th { background:#0047ab; color:white;}
+    footer { text-align:center; padding:1rem; background:#0047ab; color:white;}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛠️ Admin Dashboard</h1>
+    <nav>
+      <ul style="list-style:none; display:flex; gap:1rem; padding:0;">
+        <li><a href="home.html" style="color:white;">Home</a></li>
+        <li><a href="admin.html" style="color:white;">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Pending Claims & Unreviewed Items</h2>
+      <div id="adminGrid" class="grid"></div>
+    </section>
+
+    <section>
+      <h2>📬 User Feedbacks</h2>
+      <div id="feedbackGrid" class="grid"></div>
+    </section>
+
+    <section>
+      <h2>👥 User Analytics</h2>
+      <table id="usersTable">
+        <thead>
+          <tr><th>Email</th><th>Name</th><th>Visits</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>LostLink AI Admin © 2025</p>
+  </footer>
+
+<script>
+async function loadAdminData() {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await fetch("/admin", { headers: { "Authorization": "Bearer " + token } });
+    if (!res.ok) throw new Error("Failed to fetch admin items");
+    const items = await res.json();
+    const grid = document.getElementById("adminGrid"); grid.innerHTML = "";
+    if (items.length === 0) { grid.innerHTML = "<p>No pending items.</p>"; return; }
+    items.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+      const priority = item.priority ? '<span class="badge">🔥 Priority</span>' : '';
+      const wantsCall = item.wants_call ? '<span class="badge">📞 Wants Call</span>' : '';
+      card.innerHTML = `
+        <img src="${item.image_url}" alt="${item.item_name}" />
+        <h3>${item.item_name} ${priority} ${wantsCall}</h3>
+        <p><strong>Type:</strong> ${item.type}</p>
+        <p><strong>Location:</strong> ${item.location}</p>
+        <p><strong>Date:</strong> ${item.date} ${item.time}</p>
+        
+        <button onclick="approveItem('${item._id}', this)">✅ Mark as Claimed</button>
+      `;
+      grid.appendChild(card);
+    });
+  } catch (err) { console.error(err); }
+}
+
+async function approveItem(id, btn) {
+  btn.disabled = true; btn.textContent = "⏳ Processing...";
+  const res = await fetch(`/admin/approve/${id}`, { method: "POST" });
+  if (res.ok) { alert("✅ Marked as claimed."); loadAdminData(); }
+  else { alert("❌ Failed"); btn.disabled = false; btn.textContent = "✅ Mark as Claimed"; }
+}
+
+async function loadFeedbacks() {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await fetch("/feedbacks", { headers: { "Authorization": "Bearer " + token } });
+    if (!res.ok) throw new Error();
+    const feedbacks = await res.json();
+    const grid = document.getElementById("feedbackGrid"); grid.innerHTML = "";
+    feedbacks.forEach(fb => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<h3>${fb.email || "Anonymous"}</h3><p>${fb.message}</p><p><small>${fb.date}</small></p>`;
+      grid.appendChild(card);
+    });
+  } catch (err) { console.error(err); }
+}
+
+async function loadUsers() {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await fetch("/admin/users", { headers: { "Authorization": "Bearer " + token } });
+    if (!res.ok) throw new Error();
+    const users = await res.json();
+    const tbody = document.querySelector("#usersTable tbody"); tbody.innerHTML = "";
+    users.forEach(u => {
+      tbody.innerHTML += `<tr><td>${u.email}</td><td>${u.name}</td><td>${u.visits || 0}</td></tr>`;
+    });
+  } catch (err) { console.error("Failed loading users", err); }
+}
+
+loadAdminData();
+loadFeedbacks();
+loadUsers();
+</script>
+</body>
+</html>

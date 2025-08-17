@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>User Dashboard - LostLink AI</title>
-   
+   <script src="/static/auth.js"></script>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -71,7 +72,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: url('/img/desk.png') no-repeat center center fixed;
+      background: url('/img/dash.png') no-repeat center center fixed;
       background-size: cover;
     }
     .name{
@@ -100,8 +101,22 @@
     </nav>
   </header>
 
-  <h2>👤 Your Dashboard</h2>
-
+  <h2 id = "ok">👤 Your Dashboard</h2>
+  <style>
+    #ok {
+      
+       font-size: 1.5rem;
+        background-color: rgb(228, 228, 223);
+        padding: 1.5rem;
+        align-items: center;
+        text-align: center;
+        border-radius: 5px;
+        color: #013d5d;
+        margin-bottom: 1rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+  </style>
   <section class="section">
     <h3 class="name">📌 Reported Lost Items</h3>
     <div id="lostSection" class="cards"></div>

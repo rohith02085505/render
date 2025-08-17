@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Report Lost Item - LostLink AI</title>
   <link rel="stylesheet" href="/static/style.css" />
+<script src="/static/auth.js"></script>
 
 </head>
 <body>
 
   <!-- ✅ background image applied to a wrapper div -->
-  <div style="background-image: url('/img/report.jpg'); background-size: cover;">
+  <div style="background-image: url('/img/browse.avif'); background-size:cover; min-height: 100vh;">
 
     <header>
       <h1>📢 Report Lost Item</h1>
@@ -102,15 +103,19 @@
           alert("📞 This feature requires a small payment. Admin will review your request.");
         }
 
-        if (form.querySelector("input[name='generate_qr']").checked && data.item_id) {
-          const qrLink = `/qr/${data.item_id}`;
-          const qrBtn = document.createElement("a");
-          qrBtn.href = qrLink;
-          qrBtn.target = "_blank";
-          qrBtn.innerText = "📎 View QR Code Page";
-          qrBtn.style.display = "block";
-          form.after(qrBtn);
-        }
+        // if (form.querySelector("input[name='generate_qr']").checked && data.item_id) {
+        //   const qrLink = `/qr/${data.item_id}`;
+        //   const qrBtn = document.createElement("a");
+        //   qrBtn.href = qrLink;
+        //   qrBtn.target = "_blank";
+        //   qrBtn.innerText = "📎 View QR Code Page";
+        //   qrBtn.style.display = "block";
+        //   form.after(qrBtn);
+        // }
+  if (form.querySelector("input[name='generate_qr']").checked && data.item_id) {
+  window.location.href = `/qr/${data.item_id}`;
+}
+
 
         form.reset();
       } else {

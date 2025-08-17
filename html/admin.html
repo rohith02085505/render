@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Panel - LostLink AI</title>
+  <script src="/static/auth.js"></script>
+
   <link rel="stylesheet" href="/static/style.css" />
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('/img/browse.avif') no-repeat center center fixed;
+      background: url('/img/Screenshot\ 2025-08-17\ 162325.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #333;
@@ -18,7 +20,7 @@
       flex-direction: column;
     }
     header {
-      background-color: #0047ab;
+      background-color: #40423a;
       color: white;
       padding: 1rem 2rem;
       display: flex;
@@ -150,7 +152,7 @@
     footer {
       text-align: center;
       padding: 1rem;
-      background-color: #0047ab;
+      background-color: #40423a;
       color: white;
       font-size: 0.9rem;
       margin-top: auto;
@@ -183,6 +185,7 @@
         <li><a href="dashboard.html">Feedback Dashboard</a></li>
         <li><a href="admin.html">Admin</a></li>
         <li><a href="index.html">LostLink AI</a></li>
+        <li> <a href="adm.html">Analytics</a></li>
       </ul>
     </nav>
   </header>
@@ -210,7 +213,13 @@
   <script>
     async function loadAdminData() {
       try {
-        const res = await fetch("/admin");
+        const token = localStorage.getItem("token");
+const res = await fetch("/admin", {
+  headers: {
+    "Authorization": "Bearer " + token
+  }
+});
+
         if (!res.ok) throw new Error('Failed to fetch admin items');
         const items = await res.json();
 

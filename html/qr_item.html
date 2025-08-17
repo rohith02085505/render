@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LostLink AI - Item Details</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background:#fff; color:#222; }
+    .item-box { border: 2px solid #0047ab; padding: 2rem; border-radius: 10px; max-width: 600px; margin: auto; }
+    h1 { color:#0047ab; }
+    img { max-width:100%; border:1px solid #ccc; border-radius: 8px; margin: 1rem 0; }
+    .print-btn { margin-top:1rem; }
+    @media print {
+      .print-btn { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="item" class="item-box">Loading...</div>
+  <button class="print-btn" onclick="window.print()">🖨 Print</button>
+
+<script>
+async function loadItem() {
+  const itemId = window.location.pathname.split('/')[2];
+  const res = await fetch(`/api/qr/${itemId}`);
+  const item = await res.json();
+
+  document.getElementById("item").innerHTML = `
+    <h1>${item.page_title}: ${item.item_name}</h1>
+    <p><b>Location:</b> ${item.location}</p>
+    <p><b>Date:</b> ${item.date || ''} ${item.time || ''}</p>
+    <img src="${item.image_url}" alt="Item image"/>
+    <p><b>Description:</b> ${item.description}</p>
+  `;
+}
+loadItem();
+</script>
+</body>
+</html>
